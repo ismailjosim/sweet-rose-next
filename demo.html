@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Rose Boutique | Gourmet Treats</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .cart-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #fff1f2;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #fda4af;
+            border-radius: 10px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .float-anim {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-rose-50 text-slate-800 font-sans selection:bg-rose-200">
+
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-rose-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-2">
+                    <div
+                        class="w-10 h-10 bg-rose-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-rose-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 15.546c0 1.587-1.416 2.454-2.832 2.454H5.832C4.416 18 3 17.133 3 15.546c0-1.587 1.416-2.454 2.832-2.454h12.336c1.416 0 2.832.867 2.832 2.454zM3 10.546C3 8.959 4.416 8.092 5.832 8.092h12.336C19.584 8.092 21 8.959 21 10.546c0 1.587-1.416 2.454-2.832 2.454H5.832C4.416 13 3 12.133 3 10.546zM3 5.546C3 3.959 4.416 3.092 5.832 3.092h12.336C19.584 3.092 21 3.959 21 5.546c0 1.587-1.416 2.454-2.832 2.454H5.832C4.416 8 3 7.133 3 5.546z" />
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-serif font-bold text-rose-800 tracking-tight">Sweet Rose</span>
+                </div>
+
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-rose-900 font-medium hover:text-rose-600 transition-colors">Home</a>
+                    <a href="#shop" class="text-rose-900 font-medium hover:text-rose-600 transition-colors">Shop</a>
+                    <a href="#" class="text-rose-900 font-medium hover:text-rose-600 transition-colors">Our Story</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button id="cart-toggle-btn"
+                        class="relative p-2 text-rose-800 hover:bg-rose-100 rounded-full transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                        <span id="cart-count"
+                            class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-rose-600 rounded-full border-2 border-white">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 bg-white">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <circle cx="10" cy="10" r="20" fill="#f43f5e" />
+                <circle cx="90" cy="80" r="15" fill="#f43f5e" />
+                <circle cx="50" cy="50" r="30" fill="#f43f5e" />
+            </svg>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <span
+                    class="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wider text-rose-700 uppercase bg-rose-100 rounded-full">Artisan
+                    Confectionery</span>
+                <h1 class="text-5xl lg:text-7xl font-serif font-bold text-rose-900 mb-8 leading-tight">
+                    Sweet Moments, <br>
+                    <span class="text-rose-500 italic">Baked with Love.</span>
+                </h1>
+                <p class="max-w-2xl mx-auto text-lg text-slate-600 mb-10">
+                    Handcrafted delights inspired by the delicate beauty of roses. From velvet cakes to infused honeys,
+                    experience the essence of sweetness.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#shop"
+                        class="px-8 py-4 bg-rose-600 text-white font-bold rounded-full shadow-xl shadow-rose-200 hover:bg-rose-700 hover:-translate-y-1 transition-all">Explore
+                        Collection</a>
+                    <button
+                        class="px-8 py-4 bg-white text-rose-700 font-bold rounded-full border-2 border-rose-100 hover:border-rose-300 transition-all">Meet
+                        Our Chef</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="shop" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+                <h2 class="text-3xl font-serif font-bold text-rose-900 mb-2">Signature Treats</h2>
+                <p class="text-slate-500">Filter through our garden of delights</p>
+            </div>
+            <div id="filter-container" class="flex flex-wrap gap-2">
+                <button
+                    class="filter-btn px-6 py-2 rounded-full border border-rose-200 bg-white text-rose-700 font-medium hover:bg-rose-50 active-filter transition-all"
+                    data-category="all">All Treats</button>
+                <button
+                    class="filter-btn px-6 py-2 rounded-full border border-rose-200 bg-white text-rose-700 font-medium hover:bg-rose-50 transition-all"
+                    data-category="Cakes">Cakes</button>
+                <button
+                    class="filter-btn px-6 py-2 rounded-full border border-rose-200 bg-white text-rose-700 font-medium hover:bg-rose-50 transition-all"
+                    data-category="Pastries">Pastries</button>
+                <button
+                    class="filter-btn px-6 py-2 rounded-full border border-rose-200 bg-white text-rose-700 font-medium hover:bg-rose-50 transition-all"
+                    data-category="Specialty">Specialty</button>
+            </div>
+        </div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Products will be injected here -->
+        </div>
+    </main>
+
+    <div id="cart-sidebar"
+        class="fixed inset-y-0 right-0 w-full md:w-96 bg-white shadow-2xl z-[60] transform translate-x-full cart-transition flex flex-col">
+        <div class="p-6 border-b border-rose-100 flex justify-between items-center bg-rose-50/50">
+            <h3 class="text-xl font-serif font-bold text-rose-900">Your Sweet Box</h3>
+            <button id="cart-close-btn" class="p-2 hover:bg-rose-100 rounded-full transition-colors text-rose-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <div id="cart-items" class="flex-grow overflow-y-auto p-6 custom-scrollbar space-y-6">
+            <!-- Cart items injected here -->
+            <div class="text-center py-20 text-slate-400">
+                <p>Your box is empty. Add some sweetness!</p>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-rose-100 bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-slate-500 font-medium">Subtotal</span>
+                <span id="cart-total" class="text-2xl font-bold text-rose-900">$0.00</span>
+            </div>
+            <button id="checkout-btn"
+                class="w-full py-4 bg-rose-600 text-white font-bold rounded-xl shadow-lg shadow-rose-200 hover:bg-rose-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Backdrop for Cart -->
+    <div id="cart-backdrop" class="fixed inset-0 bg-rose-900/20 backdrop-blur-sm z-[55] hidden transition-opacity">
+    </div>
+
+    <footer class="bg-rose-900 text-rose-100 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-8">
+                <span class="text-3xl font-serif font-bold text-white">Sweet Rose</span>
+                <p class="mt-4 text-rose-300 max-w-md mx-auto">Providing the world with artisanal treats that celebrate
+                    life's most delicate moments.</p>
+            </div>
+            <div class="flex justify-center gap-6 mb-8 text-rose-300">
+                <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                <a href="#" class="hover:text-white transition-colors">Pinterest</a>
+            </div>
+            <div class="pt-8 border-t border-rose-800 text-rose-400 text-sm">
+                &copy; 2024 Sweet Rose Boutique. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                title: "Rose Velvet Dream Cake",
+                category: "Cakes",
+                price: 45.00,
+                rating: 4.9,
+                reviews: 124,
+                description: "Our signature red velvet base infused with organic rose water, layered with Tahitian vanilla bean cream cheese frosting.",
+                image: "https://placehold.co/600x600/ffe4e6/be123c?text=Rose+Velvet+Cake",
+                tag: "Best Seller"
+            },
+            {
+                id: 2,
+                title: "Sparkling Macarons",
+                category: "Pastries",
+                price: 24.50,
+                rating: 4.8,
+                reviews: 89,
+                description: "A dozen hand-painted macarons with flavors of strawberry rose, raspberry lychee, and white chocolate blossom.",
+                image: "https://placehold.co/600x600/ffe4e6/be123c?text=Sparkling+Macarons",
+                tag: "Gourmet"
+            },
+            {
+                id: 3,
+                title: "Hibiscus Infused Honey",
+                category: "Specialty",
+                price: 18.00,
+                rating: 5.0,
+                reviews: 56,
+                description: "Wildflower honey cold-steeped with dried hibiscus petals for a floral, citrus-like finish. Perfect for tea.",
+                image: "https://placehold.co/600x600/ffe4e6/be123c?text=Floral+Honey",
+                tag: "Artisan"
+            },
+            {
+                id: 4,
+                title: "Glazed Cherry Donut",
+                category: "Pastries",
+                price: 4.25,
+                rating: 4.7,
+                reviews: 210,
+                description: "Brioche style donut with a tart cherry blossom glaze and a dusting of crystallized rose petals.",
+                image: "https://placehold.co/600x600/ffe4e6/be123c?text=Cherry+Donut",
+                tag: "Freshly Baked"
+            },
+            {
+                id: 5,
+                title: "Blossom Truffle Box",
+                category: "Specialty",
+                price: 32.00,
+                rating: 4.9,
+                reviews: 75,
+                description: "65% dark chocolate ganache centers with delicate floral infusions: lavender honey, rosewater, and violet.",
+                image: "https://placehold.co/600x600/ffe4e6/be123c?text=Chocolate+Truffles",
+                tag: "Limited"
+            },
+            {
+                id: 6,
+                title: "Pink Petal Cupcakes",
+                category: "Cakes",
+                price: 28.00,
+                rating: 4.6,
+                reviews: 142,
+                description: "Fluffy vanilla sponge with a hidden raspberry core, topped with rose-swirl buttercream and edible gold leaf.",
+                image: "https://placehold.co/600x600/ffe4e6/be123c?text=Petal+Cupcakes",
+                tag: "New Arrival"
+            }
+        ];
+
+        let cart = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts('all');
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Cart Toggle
+            document.getElementById('cart-toggle-btn').addEventListener('click', toggleCart);
+            document.getElementById('cart-close-btn').addEventListener('click', toggleCart);
+            document.getElementById('cart-backdrop').addEventListener('click', toggleCart);
+
+            // Filtering
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('bg-rose-600', 'text-white'));
+                    filterBtns.forEach(b => b.classList.add('bg-white', 'text-rose-700'));
+
+                    btn.classList.remove('bg-white', 'text-rose-700');
+                    btn.classList.add('bg-rose-600', 'text-white');
+
+                    renderProducts(btn.dataset.category);
+                });
+            });
+
+            // Checkout button
+            document.getElementById('checkout-btn').addEventListener('click', () => {
+                if (cart.length > 0) {
+                    showNotice("Sweet! Processing your order...", "success");
+                    cart = [];
+                    updateCartUI();
+                    toggleCart();
+                }
+            });
+        }
+
+        function renderProducts(category) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+
+            filtered.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card group bg-white rounded-3xl overflow-hidden border border-rose-100 shadow-sm hover:shadow-xl hover:shadow-rose-100 transition-all duration-500';
+                card.innerHTML = `
+                    <div class="relative overflow-hidden aspect-square">
+                        <img src="${product.image}" alt="${product.title}" class="w-full h-full object-cover transition-transform duration-700 ease-out">
+                        ${product.tag ? `<span class="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm text-rose-700 text-xs font-bold rounded-full uppercase tracking-widest">${product.tag}</span>` : ''}
+                        <button onclick="addToCart(${product.id})" class="absolute bottom-4 right-4 w-12 h-12 bg-rose-600 text-white rounded-full flex items-center justify-center shadow-lg transform translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-rose-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs font-bold text-rose-400 uppercase tracking-widest">${product.category}</span>
+                            <div class="flex items-center text-amber-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <span class="ml-1 text-xs font-bold text-slate-700">${product.rating}</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-rose-900 mb-2 group-hover:text-rose-600 transition-colors">${product.title}</h3>
+                        <p class="text-slate-500 text-sm line-clamp-2 mb-4">${product.description}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xl font-bold text-rose-700">$${product.price.toFixed(2)}</span>
+                            <button onclick="addToCart(${product.id})" class="text-sm font-bold text-rose-600 hover:text-rose-800 transition-colors flex items-center gap-1">
+                                <span>Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existingItem = cart.find(item => item.id === id);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showNotice(`${product.title} added to your box!`, "info");
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        function updateQuantity(id, change) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(id);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            // Count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartCount.classList.add('scale-125');
+            setTimeout(() => cartCount.classList.remove('scale-125'), 200);
+
+            // Total
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = `$${totalAmount.toFixed(2)}`;
+
+            checkoutBtn.disabled = cart.length === 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-20 text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4 text-rose-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <p class="font-medium">Your box is empty.</p>
+                        <button onclick="toggleCart()" class="mt-4 text-rose-600 font-bold hover:underline">Start shopping</button>
+                    </div>
+                `;
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            cart.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex gap-4 p-4 rounded-2xl border border-rose-50 hover:bg-rose-50/30 transition-colors';
+                itemEl.innerHTML = `
+                    <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-bold text-rose-900 leading-tight">${item.title}</h4>
+                            <button onclick="removeFromCart(${item.id})" class="text-slate-300 hover:text-rose-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
+                        <p class="text-rose-600 font-bold mt-1">$${item.price.toFixed(2)}</p>
+                        <div class="flex items-center gap-3 mt-3">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 rounded-full border border-rose-200 flex items-center justify-center hover:bg-rose-100">-</button>
+                            <span class="font-bold text-slate-700">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 rounded-full border border-rose-200 flex items-center justify-center hover:bg-rose-100">+</button>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemEl);
+            });
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const backdrop = document.getElementById('cart-backdrop');
+
+            const isOpen = !sidebar.classList.contains('translate-x-full');
+
+            if (isOpen) {
+                sidebar.classList.add('translate-x-full');
+                backdrop.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            } else {
+                sidebar.classList.remove('translate-x-full');
+                backdrop.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+        }
+
+        function showNotice(msg, type) {
+            const notice = document.createElement('div');
+            notice.className = `fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full text-white font-bold shadow-2xl z-[100] transform transition-all duration-300 translate-y-20 ${type === 'success' ? 'bg-emerald-500' : 'bg-rose-600'}`;
+            notice.textContent = msg;
+            document.body.appendChild(notice);
+
+            requestAnimationFrame(() => {
+                notice.classList.remove('translate-y-20');
+            });
+
+            setTimeout(() => {
+                notice.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => notice.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
