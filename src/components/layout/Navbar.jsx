@@ -135,7 +135,7 @@ const Navbar = () => {
 						<>
 							{/* Login */}
 
-							<Link href='/auth/login'>
+							<Link href='/login'>
 								<Button
 									size='sm'
 									variant='light'
@@ -147,7 +147,7 @@ const Navbar = () => {
 
 							{/* Register */}
 
-							<Link href='/auth/register'>
+							<Link href='/register'>
 								<Button
 									size='sm'
 									className='bg-primary font-medium text-primary-foreground shadow-lg transition-all hover:scale-[1.02] hover:opacity-90'
