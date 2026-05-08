@@ -28,7 +28,7 @@ const MeetOurChef = () => {
 							{/* Image Side */}
 							<div className='md:w-1/2 h-72 md:h-auto overflow-hidden'>
 								<img
-									src='https://placehold.co/600x800/ffe4e6/e11d48?text=Chef'
+									src='/chef-img.jpg'
 									alt='Chef'
 									className='w-full h-full object-cover transform group-hover:scale-105 transition duration-700'
 								/>
