@@ -1,8 +1,9 @@
+import SignatureTreats from '@/components/modules/Home/SignatureTreats'
+
 const HomePage = () => {
 	return (
 		<div>
-			<p>this is HomePage</p>
-			<h1>this is heading</h1>
+			<SignatureTreats />
 		</div>
 	)
 }
