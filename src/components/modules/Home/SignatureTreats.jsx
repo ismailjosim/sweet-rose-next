@@ -1,47 +1,11 @@
-'use client'
-
 import ProductCard from '../Shared/ProductCard'
 
-const products = [
-	{
-		id: 1,
-		title: 'Rose Velvet Dream Cake',
-		description:
-			'Rich velvet cake infused with rose essence and creamy frosting layers.',
-		price: 45,
-		image: 'https://placehold.co/600x600/ffe4e6/be123c?text=Rose+Cake',
-		tag: 'Best Seller',
-		category: 'Cakes',
-		rating: 4.9,
-		reviews: 124,
-	},
-	{
-		id: 2,
-		title: 'Sparkling Macarons',
-		description:
-			'Delicate French macarons with floral and berry-infused fillings.',
-		price: 24.5,
-		image: 'https://placehold.co/600x600/ffe4e6/be123c?text=Macarons',
-		tag: 'Gourmet',
-		category: 'Pastries',
-		rating: 4.8,
-		reviews: 89,
-	},
-	{
-		id: 3,
-		title: 'Hibiscus Infused Honey',
-		description:
-			'Natural honey blended with hibiscus for a floral citrus taste.',
-		price: 18,
-		image: 'https://placehold.co/600x600/ffe4e6/be123c?text=Honey',
-		tag: 'Artisan',
-		category: 'Specialty',
-		rating: 5.0,
-		reviews: 56,
-	},
-]
+const SignatureTreats = async () => {
+	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data.json`, {
+		cache: 'no-store',
+	})
 
-const SignatureTreats = () => {
+	const products = await res.json()
 	return (
 		<section className='container mx-auto py-20'>
 			{/* Header */}
@@ -55,7 +19,7 @@ const SignatureTreats = () => {
 			</div>
 			{/* Grid */}
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'>
-				{products.map((product) => (
+				{products.slice(0, 3).map((product) => (
 					<ProductCard key={product.id} product={product} />
 				))}
 			</div>

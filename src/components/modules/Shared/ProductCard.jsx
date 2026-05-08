@@ -9,11 +9,12 @@ const ProductCard = ({ product }) => {
 	return (
 		<Card className='group relative overflow-hidden rounded-3xl border border-border bg-card text-card-foreground shadow-sm hover:shadow-md hover:-translate-y-2 transition-all duration-500'>
 			{/* IMAGE */}
-			<div className='relative aspect-square overflow-hidden bg-muted'>
+			<div className='relative aspect-square rounded-3xl overflow-hidden bg-muted'>
 				<Image
 					src={product.image}
 					alt={product.title}
 					fill
+					sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 					className='object-cover group-hover:scale-110 transition-transform duration-700 ease-out'
 				/>
 

@@ -3,7 +3,7 @@ import ShopHeading from '@/components/modules/Shop/ShopHeading'
 
 const ShopPage = async () => {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data.json`, {
-		cache: 'no-store', // or 'force-cache' if static
+		cache: 'no-store',
 	})
 
 	const products = await res.json()
