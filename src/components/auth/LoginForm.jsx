@@ -5,25 +5,52 @@ import { Card, InputGroup, TextField, Label, Button } from '@heroui/react'
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react'
 import { FcGoogle } from 'react-icons/fc'
 import Link from 'next/link'
+import { authClient } from '@/lib/auth-client'
+import { useRouter } from 'next/navigation'
 
 const LoginForm = () => {
+	const router = useRouter()
+
 	const [loading, setLoading] = useState(false)
 	const [showPassword, setShowPassword] = useState(false)
 
-	const handleLogin = (e) => {
-		e.preventDefault()
-		setLoading(true)
-		setTimeout(() => {
+	const handleLogin = async (formData) => {
+		const email = formData.get('email')
+		const password = formData.get('password')
+
+		try {
+			await authClient.signIn.email(
+				{
+					email,
+					password,
+				},
+				{
+					onRequest: () => {
+						setLoading(true)
+					},
+
+					onSuccess: () => {
+						setLoading(false)
+						router.push('/')
+					},
+
+					onError: (ctx) => {
+						setLoading(false)
+						alert(ctx.error.message)
+					},
+				},
+			)
+		} catch (error) {
 			setLoading(false)
-			alert('Logged in successfully (demo)')
-		}, 1200)
+			console.log(error)
+		}
 	}
 
 	return (
-		<Card className='w-full max-w-md p-8 shadow-2xl rounded-[2.5rem] border border-border bg-surface text-surface-foreground'>
+		<Card className='w-full max-w-md p-8 shadow-2xl rounded-[2.5rem] border border-border bg-card text-card-foreground transition-colors duration-300'>
 			{/* Header */}
 			<div className='text-center mb-8'>
-				<div className='w-16 h-16 mx-auto bg-primary-soft text-primary flex items-center justify-center rounded-2xl mb-4'>
+				<div className='w-16 h-16 mx-auto bg-secondary text-primary flex items-center justify-center rounded-2xl mb-4'>
 					<Lock size={28} />
 				</div>
 
@@ -37,29 +64,65 @@ const LoginForm = () => {
 			</div>
 
 			{/* Form */}
-			<form onSubmit={handleLogin} className='space-y-5'>
+			<form action={handleLogin} className='space-y-5'>
 				{/* Email */}
 				<TextField isRequired>
-					<Label>Email</Label>
-					<InputGroup fullWidth className='border-2'>
+					<Label className='text-foreground font-medium mb-2'>Email</Label>
+
+					<InputGroup
+						fullWidth
+						className='
+							bg-secondary
+							border border-border
+							rounded-2xl
+							px-3
+							transition-all
+							duration-300
+							focus-within:ring-2
+							focus-within:ring-primary/20
+						'
+					>
 						<InputGroup.Prefix>
 							<Mail size={18} className='text-primary' />
 						</InputGroup.Prefix>
-						<InputGroup.Input type='email' placeholder='hello@sweetrose.com' />
+
+						<InputGroup.Input
+							name='email'
+							type='email'
+							placeholder='hello@sweetrose.com'
+							className='bg-transparent text-foreground placeholder:text-muted-foreground'
+						/>
 					</InputGroup>
 				</TextField>
 
 				{/* Password */}
 				<TextField isRequired>
-					<Label>Password</Label>
-					<InputGroup fullWidth className='border-2'>
+					<Label className='text-foreground font-medium mb-2'>Password</Label>
+
+					<InputGroup
+						fullWidth
+						className='
+							bg-secondary
+							border border-border
+							rounded-2xl
+							px-3
+							transition-all
+							duration-300
+							focus-within:ring-2
+							focus-within:ring-primary/20
+						'
+					>
 						<InputGroup.Prefix>
 							<Lock size={18} className='text-primary' />
 						</InputGroup.Prefix>
+
 						<InputGroup.Input
+							name='password'
 							type={showPassword ? 'text' : 'password'}
 							placeholder='••••••••'
+							className='bg-transparent text-foreground placeholder:text-muted-foreground'
 						/>
+
 						<InputGroup.Suffix>
 							<button
 								type='button'
@@ -86,7 +149,16 @@ const LoginForm = () => {
 				<Button
 					type='submit'
 					isLoading={loading}
-					className='w-full bg-primary text-primary-foreground font-bold'
+					className='
+						w-full
+						bg-primary
+						text-primary-foreground
+						font-bold
+						rounded-2xl
+						h-12
+						hover:opacity-90
+						transition-all
+					'
 				>
 					Sign In
 				</Button>
@@ -101,7 +173,14 @@ const LoginForm = () => {
 				{/* Google Login */}
 				<Button
 					variant='secondary'
-					className='w-full'
+					className='
+						w-full
+						bg-secondary
+						text-foreground
+						border border-border
+						rounded-2xl
+						font-medium
+					'
 					onPress={() => alert('Google login')}
 				>
 					<FcGoogle size={20} />

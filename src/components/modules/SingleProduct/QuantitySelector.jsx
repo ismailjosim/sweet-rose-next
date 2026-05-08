@@ -1,3 +1,5 @@
+import { Label, ListBox, Select } from '@heroui/react'
+
 const QuantitySelector = ({
 	qty,
 	setQty,
@@ -15,34 +17,60 @@ const QuantitySelector = ({
 	]
 
 	return (
-		<div className='space-y-6 bg-white p-8 rounded-[2.5rem] shadow-xl shadow-rose-200/50 border border-rose-100'>
-			{/* Quantity and Occasion Row */}
+		<div className='space-y-6 bg-card p-8 rounded-[2.5rem] border border-border shadow-xl transition-colors duration-300'>
+			{/* Quantity + Occasion */}
 			<div className='grid md:grid-cols-2 gap-6'>
 				{/* Quantity */}
 				<div>
-					<label className='block text-sm font-bold text-slate-700 mb-3'>
+					<label className='block text-sm font-bold text-foreground mb-3'>
 						Quantity
 					</label>
-					<div className='flex items-center bg-rose-50 rounded-2xl p-1.5 w-fit border border-rose-100'>
+
+					<div className='flex items-center bg-secondary rounded-2xl p-1.5 w-fit border border-border transition-colors duration-300'>
 						<button
 							type='button'
 							onClick={() => setQty((q) => (q > 1 ? q - 1 : 1))}
-							className='w-10 h-10 flex items-center justify-center text-rose-600 hover:bg-white rounded-xl transition-all font-bold text-xl'
+							className='
+								w-10 h-10
+								flex items-center justify-center
+								text-primary
+								hover:bg-background
+								rounded-xl
+								transition-all
+								font-bold text-xl
+							'
 						>
 							−
 						</button>
+
 						<input
 							type='number'
 							value={qty}
 							onChange={(e) =>
 								setQty(Math.max(1, parseInt(e.target.value) || 1))
 							}
-							className='w-12 text-center bg-transparent font-bold text-lg outline-none'
+							className='
+								w-12 text-center
+								bg-transparent
+								text-foreground
+								font-bold text-lg
+								outline-none
+								appearance-none
+							'
 						/>
+
 						<button
 							type='button'
 							onClick={() => setQty((q) => q + 1)}
-							className='w-10 h-10 flex items-center justify-center text-rose-600 hover:bg-white rounded-xl transition-all font-bold text-xl'
+							className='
+								w-10 h-10
+								flex items-center justify-center
+								text-primary
+								hover:bg-background
+								rounded-xl
+								transition-all
+								font-bold text-xl
+							'
 						>
 							+
 						</button>
@@ -51,43 +79,102 @@ const QuantitySelector = ({
 
 				{/* Occasion */}
 				<div>
-					<label className='block text-sm font-bold text-slate-700 mb-3'>
-						Select Occasion
-					</label>
-					<select
-						value={occasion}
-						onChange={(e) => setOccasion(e.target.value)}
-						className='w-full bg-rose-50 border border-rose-100 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-200 transition-all font-medium appearance-none'
-						style={{
-							backgroundImage:
-								'url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 20 20%22%3E%3Cpath stroke=%22%23e11d48%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%222%22 d=%22M6 8l4 4 4-4%22/%3E%3C/svg%3E")',
-							backgroundPosition: 'right 0.75rem center',
-							backgroundRepeat: 'no-repeat',
-							backgroundSize: '1.25em 1.25em',
-							paddingRight: '2.5rem',
+					<Select
+						selectedKeys={occasion ? [occasion] : []}
+						onSelectionChange={(keys) => {
+							const value = Array.from(keys)[0]
+							setOccasion(value || '')
 						}}
+						className='w-full'
+						placeholder='Select an occasion'
 					>
-						<option value=''>-- Select an occasion --</option>
-						{occasions.map((occ) => (
-							<option key={occ} value={occ}>
-								{occ}
-							</option>
-						))}
-					</select>
+						<Label className='text-sm font-bold text-foreground mb-2'>
+							Select Occasion
+						</Label>
+
+						<Select.Trigger
+							className='
+								bg-secondary
+								border border-border
+								text-foreground
+								rounded-2xl
+								px-4 py-3
+								min-h-14
+								shadow-none
+								transition-all
+								duration-300
+								data-[hovered=true]:bg-hover
+								data-[focus-visible=true]:ring-2
+								data-[focus-visible=true]:ring-primary/30
+							'
+						>
+							<Select.Value />
+							<Select.Indicator />
+						</Select.Trigger>
+
+						<Select.Popover
+							className='
+								bg-card
+								border border-border
+								rounded-2xl
+								shadow-2xl
+								p-2
+							'
+						>
+							<ListBox className='space-y-1'>
+								{occasions.map((occ) => (
+									<ListBox.Item
+										key={occ}
+										id={occ}
+										textValue={occ}
+										className='
+											rounded-xl
+											px-3 py-3
+											text-card-foreground
+											cursor-pointer
+											transition-all
+											duration-200
+											data-[hovered=true]:bg-hover
+											data-[selected=true]:bg-primary
+											data-[selected=true]:text-primary-foreground
+										'
+									>
+										{occ}
+										<ListBox.ItemIndicator />
+									</ListBox.Item>
+								))}
+							</ListBox>
+						</Select.Popover>
+					</Select>
 				</div>
 			</div>
 
 			{/* Special Instructions */}
 			<div>
-				<label className='block text-sm font-bold text-slate-700 mb-3'>
+				<label className='block text-sm font-bold text-foreground mb-3'>
 					Special Baker Instructions
 				</label>
+
 				<textarea
 					value={instructions}
 					onChange={(e) => setInstructions(e.target.value)}
 					rows='3'
 					placeholder='e.g. Less sugar, extra rose petals on top...'
-					className='w-full bg-rose-50 border border-rose-100 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-rose-200 transition-all resize-none'
+					className='
+						w-full
+						bg-secondary
+						border border-border
+						text-foreground
+						placeholder:text-muted-foreground
+						rounded-2xl
+						px-4 py-4
+						outline-none
+						resize-none
+						transition-all
+						duration-300
+						focus:ring-2
+						focus:ring-primary/20
+					'
 				/>
 			</div>
 		</div>
