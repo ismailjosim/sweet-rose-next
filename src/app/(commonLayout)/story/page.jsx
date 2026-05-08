@@ -1,9 +1,15 @@
-import React from 'react'
+import TheArtistry from '@/components/modules/OurStory/TheArtistry'
+import TheCommunity from '@/components/modules/OurStory/TheCommunity'
+import ThePhilosophy from '@/components/modules/OurStory/ThePhilosophy'
+import TheRoot from '@/components/modules/OurStory/TheRoot'
 
 const OurStoryPage = () => {
 	return (
 		<div>
-			<h2 className='text-4xl'>this is Our Story Page</h2>
+			<TheRoot />
+			<ThePhilosophy />
+			<TheArtistry />
+			<TheCommunity />
 		</div>
 	)
 }
