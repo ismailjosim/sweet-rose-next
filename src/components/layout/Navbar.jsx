@@ -3,8 +3,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
-import { Avatar, Button, toast } from '@heroui/react'
+import { Avatar, Button } from '@heroui/react'
 
 import ThemeToggler from '@/lib/ThemeToggler'
 import { authClient } from '@/lib/auth-client'
@@ -22,24 +23,31 @@ const navLinks = [
 		label: 'Our Story',
 		href: '/story',
 	},
-	{
-		label: 'My Profile',
-		href: '/profile',
-	},
 ]
 
 const Navbar = () => {
+	const router = useRouter()
+
+	/* =========================
+	   SESSION
+	========================= */
+
 	const { data: session, isPending } = authClient.useSession()
 
 	const user = session?.user
 
-	const router = useRouter()
+	/* =========================
+	   LOGOUT
+	========================= */
 
 	const handleLogout = async () => {
 		await authClient.signOut({
 			fetchOptions: {
 				onSuccess: () => {
-					toast.success('Logged out successfully')
+					toast.success('See you soon! 👋 Logged out successfully', {
+						position: 'top-right',
+						autoClose: 3000,
+					})
 
 					router.push('/')
 					router.refresh()
@@ -51,6 +59,7 @@ const Navbar = () => {
 	return (
 		<nav className='sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl'>
 			<header className='container mx-auto flex items-center justify-between py-4'>
+				{/* Logo */}
 				<Link href='/' className='group flex items-center gap-3'>
 					<div className='flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-primary shadow-lg transition-transform duration-300 group-hover:scale-105'>
 						<Image
@@ -72,6 +81,8 @@ const Navbar = () => {
 						</span>
 					</div>
 				</Link>
+
+				{/* Navigation */}
 				<ul className='hidden items-center gap-8 md:flex'>
 					{navLinks.map((link) => (
 						<li key={link.href}>
@@ -83,22 +94,36 @@ const Navbar = () => {
 							</Link>
 						</li>
 					))}
+
+					{/* Profile Link Only When Logged In */}
+					{user && (
+						<li>
+							<Link
+								href='/profile'
+								className='font-medium text-foreground transition-colors duration-200 hover:text-primary'
+							>
+								My Profile
+							</Link>
+						</li>
+					)}
 				</ul>
+
+				{/* Right Side */}
 				<div className='flex items-center gap-3'>
 					{/* Theme Toggle */}
-
 					<div className='rounded-full border border-border bg-secondary p-1'>
 						<ThemeToggler />
 					</div>
 
-					{/* Loading State */}
+					{/* Loading */}
+					{isPending && (
+						<div className='h-10 w-24 animate-pulse rounded-2xl bg-muted' />
+					)}
 
-					{isPending ? (
-						<div className='h-9 w-9 animate-pulse rounded-full bg-muted' />
-					) : user ? (
-						<>
+					{/* Logged In */}
+					{!isPending && user && (
+						<div className='flex items-center gap-3'>
 							{/* User Info */}
-
 							<div className='hidden flex-col items-end md:flex'>
 								<span className='text-sm font-semibold text-foreground'>
 									{user.name}
@@ -110,18 +135,18 @@ const Navbar = () => {
 							</div>
 
 							{/* Avatar */}
+							<Link href='/profile'>
+								<Avatar
+									src={user.image || ''}
+									name={user.name || 'User'}
+									size='sm'
+									isBordered
+									color='danger'
+									className='cursor-pointer ring-2 ring-border transition-transform hover:scale-105'
+								/>
+							</Link>
 
-							<Avatar
-								src={user.image || ''}
-								name={user.name || 'User'}
-								size='sm'
-								isBordered
-								color='danger'
-								className='ring-2 ring-border'
-							/>
-
-							{/* Logout Button */}
-
+							{/* Logout */}
 							<Button
 								size='sm'
 								variant='flat'
@@ -130,11 +155,13 @@ const Navbar = () => {
 							>
 								Logout
 							</Button>
-						</>
-					) : (
-						<>
-							{/* Login */}
+						</div>
+					)}
 
+					{/* Logged Out */}
+					{!isPending && !user && (
+						<div className='flex items-center gap-2'>
+							{/* Login */}
 							<Link href='/login'>
 								<Button
 									size='sm'
@@ -146,7 +173,6 @@ const Navbar = () => {
 							</Link>
 
 							{/* Register */}
-
 							<Link href='/register'>
 								<Button
 									size='sm'
@@ -155,7 +181,7 @@ const Navbar = () => {
 									Register
 								</Button>
 							</Link>
-						</>
+						</div>
 					)}
 				</div>
 			</header>

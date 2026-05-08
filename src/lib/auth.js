@@ -2,10 +2,8 @@ import { mongodbAdapter } from '@better-auth/mongo-adapter'
 import { betterAuth } from 'better-auth'
 import { MongoClient } from 'mongodb'
 
-const client = new MongoClient(
-	'mongodb+srv://ismailjosimwork_db_user:zWNKONGKTkdmrlUX@cluster0.rxhgb5i.mongodb.net',
-)
-const db = client.db('LearnifyDB')
+const client = new MongoClient(process.env.MONGODB_URL)
+const db = client.db('SweetRose_DB')
 
 export const auth = betterAuth({
 	database: mongodbAdapter(db, {

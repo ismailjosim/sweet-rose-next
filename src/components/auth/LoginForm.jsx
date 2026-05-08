@@ -7,6 +7,7 @@ import { FcGoogle } from 'react-icons/fc'
 import Link from 'next/link'
 import { authClient } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 const LoginForm = () => {
 	const router = useRouter()
@@ -31,17 +32,28 @@ const LoginForm = () => {
 
 					onSuccess: () => {
 						setLoading(false)
+						toast.success('Welcome back! 🌸 Login successful', {
+							position: 'top-right',
+							autoClose: 3000,
+						})
 						router.push('/')
 					},
 
 					onError: (ctx) => {
 						setLoading(false)
-						alert(ctx.error.message)
+						toast.error(ctx.error.message || 'Login failed. Please try again', {
+							position: 'top-right',
+							autoClose: 4000,
+						})
 					},
 				},
 			)
 		} catch (error) {
 			setLoading(false)
+			toast.error('An unexpected error occurred', {
+				position: 'top-right',
+				autoClose: 4000,
+			})
 			console.log(error)
 		}
 	}
@@ -181,7 +193,12 @@ const LoginForm = () => {
 						rounded-2xl
 						font-medium
 					'
-					onPress={() => alert('Google login')}
+					onPress={() =>
+						toast.info('Google login coming soon! 🚀', {
+							position: 'top-right',
+							autoClose: 3000,
+						})
+					}
 				>
 					<FcGoogle size={20} />
 					<span>Continue with Google</span>

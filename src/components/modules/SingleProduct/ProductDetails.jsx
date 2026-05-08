@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import ProductImage from './ProductImage'
 import ProductInfo from './ProductInfo'
 import QuantitySelector from './QuantitySelector'
@@ -19,6 +20,15 @@ const ProductDetails = ({ product, onAddToCart }) => {
 
 	const handleAddToCart = async (e) => {
 		e.preventDefault()
+
+		if (!occasion) {
+			toast.warning('Please select an occasion', {
+				position: 'top-right',
+				autoClose: 3000,
+			})
+			return
+		}
+
 		setIsLoading(true)
 
 		try {
@@ -35,6 +45,11 @@ const ProductDetails = ({ product, onAddToCart }) => {
 				})
 			}
 
+			toast.success(`🎉 Added ${qty} ${product.title} to your Sweet Box!`, {
+				position: 'top-right',
+				autoClose: 4000,
+			})
+
 			setIsAdded(true)
 			setTimeout(() => {
 				setIsAdded(false)
@@ -47,6 +62,10 @@ const ProductDetails = ({ product, onAddToCart }) => {
 			}, 3000)
 		} catch (error) {
 			console.error('Error adding to cart:', error)
+			toast.error('Failed to add item to cart', {
+				position: 'top-right',
+				autoClose: 4000,
+			})
 		} finally {
 			setIsLoading(false)
 		}

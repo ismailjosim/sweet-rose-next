@@ -7,6 +7,7 @@ import { FcGoogle } from 'react-icons/fc'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client'
+import { toast } from 'react-toastify'
 
 const RegisterForm = () => {
 	const router = useRouter()
@@ -14,11 +15,8 @@ const RegisterForm = () => {
 	const [loading, setLoading] = useState(false)
 	const [showPassword, setShowPassword] = useState(false)
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-	const [error, setError] = useState('')
 
 	const handleRegister = async (formData) => {
-		setError('')
-
 		const name = formData.get('name')
 		const image = formData.get('image')
 		const email = formData.get('email')
@@ -30,12 +28,18 @@ const RegisterForm = () => {
 		========================= */
 
 		if (password !== confirmPassword) {
-			setError('Passwords do not match')
+			toast.warning('Passwords do not match', {
+				position: 'top-right',
+				autoClose: 4000,
+			})
 			return
 		}
 
 		if (password.length < 6) {
-			setError('Password must be at least 6 characters')
+			toast.warning('Password must be at least 6 characters', {
+				position: 'top-right',
+				autoClose: 4000,
+			})
 			return
 		}
 
@@ -57,18 +61,34 @@ const RegisterForm = () => {
 
 					onSuccess: () => {
 						setLoading(false)
+						toast.success(
+							'Account created successfully! 🌸 Welcome to Sweet Rose',
+							{
+								position: 'top-right',
+								autoClose: 3000,
+							},
+						)
 						router.push('/')
 					},
 
 					onError: (ctx) => {
 						setLoading(false)
-						setError(ctx.error.message)
+						toast.error(
+							ctx.error.message || 'Registration failed. Please try again',
+							{
+								position: 'top-right',
+								autoClose: 4000,
+							},
+						)
 					},
 				},
 			)
 		} catch (err) {
 			setLoading(false)
-			setError('Something went wrong')
+			toast.error('Something went wrong', {
+				position: 'top-right',
+				autoClose: 4000,
+			})
 			console.log(err)
 		}
 	}
@@ -111,22 +131,6 @@ const RegisterForm = () => {
 					Join Sweet Rose and enjoy sweet moments
 				</p>
 			</div>
-
-			{/* Error */}
-			{error && (
-				<div
-					className='
-						mb-4
-						bg-red-100
-						text-red-600
-						text-sm
-						px-4 py-3
-						rounded-2xl
-					'
-				>
-					{error}
-				</div>
-			)}
 
 			{/* Form */}
 			<form action={handleRegister} className='space-y-5'>
@@ -327,7 +331,12 @@ const RegisterForm = () => {
 						border border-border
 						rounded-2xl
 					'
-					onPress={() => alert('Google signup')}
+					onPress={() =>
+						toast.info('Google signup coming soon! 🚀', {
+							position: 'top-right',
+							autoClose: 3000,
+						})
+					}
 				>
 					<FcGoogle size={20} />
 					<span>Continue with Google</span>

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { useSession } from '@/lib/auth-client'
 
 const ORDERS = [
@@ -58,6 +59,32 @@ const MyProfilePage = () => {
 	const { data: session, isPending } = useSession()
 
 	const user = session?.user
+
+	/* =========================
+	   HANDLE REWARD INTERACTION
+	========================= */
+
+	const handleRewardClick = (reward) => {
+		if (reward.status === 'Locked') {
+			toast.warning(`Need ${reward.cost} Buds to unlock this reward 🔒`, {
+				position: 'top-right',
+				autoClose: 3000,
+			})
+		} else if (reward.status === 'Active Benefit') {
+			toast.success(`You're already enjoying ${reward.title}! 🎉`, {
+				position: 'top-right',
+				autoClose: 3000,
+			})
+		} else if (reward.status === 'Claim Reward') {
+			toast.success(
+				`Claimed: ${reward.title}! 🎁 Check your email for details`,
+				{
+					position: 'top-right',
+					autoClose: 4000,
+				},
+			)
+		}
+	}
 
 	/* =========================
 	   DYNAMIC USER DATA
@@ -293,14 +320,15 @@ const MyProfilePage = () => {
 											</p>
 
 											<button
+												onClick={() => handleRewardClick(reward)}
 												className={`
-													w-full py-3 rounded-2xl text-xs font-bold transition-all
-													${
-														reward.status === 'Locked'
-															? 'bg-muted text-muted-foreground cursor-not-allowed'
-															: 'bg-primary text-primary-foreground'
-													}
-												`}
+												w-full py-3 rounded-2xl text-xs font-bold transition-all
+												${
+													reward.status === 'Locked'
+														? 'bg-muted text-muted-foreground cursor-not-allowed'
+														: 'bg-primary text-primary-foreground hover:opacity-90'
+												}
+											`}
 											>
 												{reward.status}
 											</button>

@@ -1,9 +1,10 @@
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
+import 'react-toastify/dist/ReactToastify.css'
 import NextThemeProvider from '../../providers/NextThemeProvider'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import { Toast } from '@heroui/react'
+import { ToastContainer } from 'react-toastify'
 
 // Body & UI font
 const inter = Inter({
@@ -32,7 +33,16 @@ export default function RootLayout({ children }) {
 		>
 			<body className='min-h-full flex flex-col font-(--font-inter)'>
 				<NextThemeProvider>
-					<Toast.Provider />
+					<ToastContainer
+						position='top-right'
+						autoClose={4000}
+						hideProgressBar={false}
+						newestOnTop={true}
+						closeOnClick
+						pauseOnHover
+						draggable
+						theme='light'
+					/>
 					<Navbar />
 					<main className='min-h-screen'>{children}</main>
 					<Footer />
