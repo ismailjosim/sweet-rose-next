@@ -1,6 +1,6 @@
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
-import NextThemeProvider from '../providers/NextThemeProvider'
+import NextThemeProvider from '../../providers/NextThemeProvider'
 import Navbar from '@/components/layout/Navbar'
 
 // Body & UI font
@@ -26,11 +26,7 @@ export default function RootLayout({ children }) {
 		<html
 			lang='en'
 			suppressHydrationWarning
-			className={`
-    ${inter.variable}
-    ${playfair.variable}
-    h-full antialiased
-  `}
+			className={`${inter.variable} ${playfair.variable} h-screen antialiased`}
 		>
 			<body className='min-h-full flex flex-col font-(--font-inter)'>
 				<NextThemeProvider>
