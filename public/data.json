@@ -1,0 +1,134 @@
+[
+	{
+		"id": 1,
+		"title": "Rose Velvet Dream Cake",
+		"description": "Rich velvet cake infused with rose essence and creamy frosting layers.",
+		"price": 45,
+		"image": "",
+		"tag": "Best Seller",
+		"category": "Cakes",
+		"rating": 4.9,
+		"reviews": 124
+	},
+	{
+		"id": 2,
+		"title": "Sparkling Macarons",
+		"description": "Delicate French macarons with floral and berry-infused fillings.",
+		"price": 24.5,
+		"image": "",
+		"tag": "Gourmet",
+		"category": "Pastries",
+		"rating": 4.8,
+		"reviews": 89
+	},
+	{
+		"id": 3,
+		"title": "Hibiscus Infused Honey",
+		"description": "Natural honey blended with hibiscus for a floral citrus taste.",
+		"price": 18,
+		"image": "",
+		"tag": "Artisan",
+		"category": "Specialty",
+		"rating": 5.0,
+		"reviews": 56
+	},
+	{
+		"id": 4,
+		"title": "Strawberry Cream Cupcake",
+		"description": "Soft cupcakes topped with fresh strawberry cream frosting.",
+		"price": 12,
+		"image": "",
+		"tag": "Popular",
+		"category": "Cupcakes",
+		"rating": 4.7,
+		"reviews": 98
+	},
+	{
+		"id": 5,
+		"title": "Chocolate Truffle Delight",
+		"description": "Rich dark chocolate truffles with a silky ganache center.",
+		"price": 20,
+		"image": "",
+		"tag": "Premium",
+		"category": "Chocolates",
+		"rating": 4.9,
+		"reviews": 110
+	},
+	{
+		"id": 6,
+		"title": "Vanilla Bean Cheesecake",
+		"description": "Creamy cheesecake infused with real vanilla bean.",
+		"price": 35,
+		"image": "",
+		"tag": "Classic",
+		"category": "Cakes",
+		"rating": 4.8,
+		"reviews": 76
+	},
+	{
+		"id": 7,
+		"title": "Lemon Tart Bliss",
+		"description": "Tangy lemon filling in a buttery crisp tart shell.",
+		"price": 16,
+		"image": "",
+		"tag": "Zesty",
+		"category": "Tarts",
+		"rating": 4.6,
+		"reviews": 64
+	},
+	{
+		"id": 8,
+		"title": "Caramel Pudding Cup",
+		"description": "Smooth caramel pudding topped with golden caramel glaze.",
+		"price": 10,
+		"image": "",
+		"tag": "Sweet",
+		"category": "Desserts",
+		"rating": 4.5,
+		"reviews": 52
+	},
+	{
+		"id": 9,
+		"title": "Almond Rose Biscotti",
+		"description": "Crispy biscotti with almond crunch and rose aroma.",
+		"price": 14,
+		"image": "",
+		"tag": "Crunchy",
+		"category": "Biscuits",
+		"rating": 4.7,
+		"reviews": 43
+	},
+	{
+		"id": 10,
+		"title": "Blueberry Cream Donut",
+		"description": "Soft donut filled with blueberry cream and sugar glaze.",
+		"price": 9,
+		"image": "",
+		"tag": "Fresh",
+		"category": "Donuts",
+		"rating": 4.6,
+		"reviews": 88
+	},
+	{
+		"id": 11,
+		"title": "Pistachio Milk Cake",
+		"description": "Moist milk cake layered with crushed pistachios.",
+		"price": 28,
+		"image": "",
+		"tag": "Rich",
+		"category": "Cakes",
+		"rating": 4.8,
+		"reviews": 71
+	},
+	{
+		"id": 12,
+		"title": "Orange Blossom Jelly",
+		"description": "Light jelly dessert infused with orange blossom essence.",
+		"price": 11,
+		"image": "",
+		"tag": "Light",
+		"category": "Jelly",
+		"rating": 4.4,
+		"reviews": 39
+	}
+]

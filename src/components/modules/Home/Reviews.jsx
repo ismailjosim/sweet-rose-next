@@ -34,10 +34,37 @@ const reviews = [
 			'The design of both the shop and desserts is stunning. Love the branding.',
 		rating: 4.9,
 	},
+	{
+		name: 'Ayesha Rahman',
+		role: 'Food Blogger',
+		comment:
+			'Absolutely magical desserts! The rose cake felt like art you can eat. 10/10 experience.',
+		rating: 5,
+	},
+	{
+		name: 'John Carter',
+		role: 'Chef Enthusiast',
+		comment:
+			'The macarons are next level. Light, flavorful, and beautifully crafted.',
+		rating: 4.8,
+	},
+	{
+		name: 'Sara Ahmed',
+		role: 'Customer',
+		comment:
+			'Best bakery experience I’ve had. Everything feels premium and fresh.',
+		rating: 5,
+	},
+	{
+		name: 'Michael Lee',
+		role: 'Designer',
+		comment:
+			'The design of both the shop and desserts is stunning. Love the branding.',
+		rating: 4.9,
+	},
 ]
 
 const ReviewsSection = () => {
-	// 👇 Autoplay plugin (loop + delay)
 	const autoplay = useMemo(
 		() =>
 			Autoplay({

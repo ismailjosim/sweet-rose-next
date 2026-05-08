@@ -1,8 +1,18 @@
-const ShopPage = () => {
+import Products from '@/components/modules/Shop/Products'
+import ShopHeading from '@/components/modules/Shop/ShopHeading'
+
+const ShopPage = async () => {
+	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data.json`, {
+		cache: 'no-store', // or 'force-cache' if static
+	})
+
+	const products = await res.json()
+
 	return (
-		<div>
-			<h2 className='text-4xl'>this is shop page</h2>
-		</div>
+		<section>
+			<ShopHeading />
+			<Products products={products} />
+		</section>
 	)
 }
 

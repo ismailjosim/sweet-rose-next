@@ -59,31 +59,6 @@ const SignatureTreats = () => {
 					<ProductCard key={product.id} product={product} />
 				))}
 			</div>
-			{/* <div className='flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6'>
-				<div>
-					<h2 className='text-3xl font-serif font-bold text-rose-900 mb-2'>
-						Signature Treats
-					</h2>
-					<p className='text-slate-500'>
-						Filter through our garden of delights
-					</p>
-				</div>
-
-				<div className='flex gap-2 flex-wrap'>
-					<button className='px-6 py-2 rounded-full bg-rose-600 text-white font-medium'>
-						All Treats
-					</button>
-					<button className='px-6 py-2 rounded-full border border-rose-200 text-rose-700 hover:bg-rose-50'>
-						Cakes
-					</button>
-					<button className='px-6 py-2 rounded-full border border-rose-200 text-rose-700 hover:bg-rose-50'>
-						Pastries
-					</button>
-					<button className='px-6 py-2 rounded-full border border-rose-200 text-rose-700 hover:bg-rose-50'>
-						Specialty
-					</button>
-				</div>
-			</div> */}
 		</section>
 	)
 }
