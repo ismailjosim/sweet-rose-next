@@ -1,14 +1,15 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 
-import { Avatar, Button } from '@heroui/react'
+import { Avatar, Button, Dropdown } from '@heroui/react'
 
 import ThemeToggler from '@/lib/ThemeToggler'
 import { authClient } from '@/lib/auth-client'
+import { Menu } from 'lucide-react'
+import Link from 'next/link'
 
 const navLinks = [
 	{
@@ -24,7 +25,6 @@ const navLinks = [
 		href: '/story',
 	},
 ]
-
 const Navbar = () => {
 	const router = useRouter()
 
@@ -42,6 +42,8 @@ const Navbar = () => {
 
 	const handleLogout = async () => {
 		await authClient.signOut({
+			//* Ref: https://better-auth.com/docs/concepts/client
+			//* fetchOptions is basically passing extra options/configuration to the internal fetch request.
 			fetchOptions: {
 				onSuccess: () => {
 					toast.success('See you soon! 👋 Logged out successfully', {
@@ -71,7 +73,8 @@ const Navbar = () => {
 						/>
 					</div>
 
-					<div className='flex flex-col'>
+					{/* Text logo — hidden on mobile */}
+					<div className='hidden flex-col md:flex'>
 						<span className='font-serif text-2xl font-bold tracking-tight text-foreground'>
 							Sweet Rose
 						</span>
@@ -82,7 +85,7 @@ const Navbar = () => {
 					</div>
 				</Link>
 
-				{/* Navigation */}
+				{/* Desktop Navigation */}
 				<ul className='hidden items-center gap-8 md:flex'>
 					{navLinks.map((link) => (
 						<li key={link.href}>
@@ -110,21 +113,21 @@ const Navbar = () => {
 
 				{/* Right Side */}
 				<div className='flex items-center gap-3'>
-					{/* Theme Toggle */}
+					{/* Theme Toggle — always visible */}
 					<div className='rounded-full border border-border bg-secondary p-1'>
 						<ThemeToggler />
 					</div>
 
-					{/* Loading */}
+					{/* Loading skeleton */}
 					{isPending && (
 						<div className='h-10 w-24 animate-pulse rounded-2xl bg-muted' />
 					)}
 
-					{/* Logged In */}
+					{/* ── DESKTOP: Logged In ── */}
 					{!isPending && user && (
-						<div className='flex items-center gap-3'>
+						<div className='hidden items-center gap-3 md:flex'>
 							{/* User Info */}
-							<div className='hidden flex-col items-end md:flex'>
+							<div className='flex flex-col items-end'>
 								<span className='text-sm font-semibold text-foreground'>
 									{user.name}
 								</span>
@@ -158,31 +161,122 @@ const Navbar = () => {
 						</div>
 					)}
 
-					{/* Logged Out */}
+					{/* ── DESKTOP: Logged Out ── */}
 					{!isPending && !user && (
-						<div className='flex items-center gap-2'>
-							{/* Login */}
-							<Link href='/login'>
-								<Button
-									size='sm'
-									variant='light'
-									className='font-medium text-foreground transition-colors hover:bg-hover'
-								>
-									Login
-								</Button>
-							</Link>
+						<div className='hidden items-center gap-2 md:flex'>
+							<Button
+								asChild
+								size='sm'
+								variant='light'
+								className='font-medium text-foreground transition-colors hover:bg-hover'
+							>
+								<Link href='/login'>Login</Link>
+							</Button>
 
-							{/* Register */}
-							<Link href='/register'>
-								<Button
-									size='sm'
-									className='bg-primary font-medium text-primary-foreground shadow-lg transition-all hover:scale-[1.02] hover:opacity-90'
-								>
-									Register
-								</Button>
-							</Link>
+							<Button
+								asChild
+								size='sm'
+								className='bg-primary font-medium text-primary-foreground shadow-lg transition-all hover:scale-[1.02] hover:opacity-90'
+							>
+								<Link href='/register'>Register</Link>
+							</Button>
 						</div>
 					)}
+
+					{/* ── MOBILE: Avatar (only when logged in) ── */}
+					{!isPending && user && (
+						<Link href='/profile' className='md:hidden'>
+							<Avatar
+								src={user.image || ''}
+								name={user.name || 'User'}
+								size='sm'
+								isBordered
+								color='danger'
+								className='cursor-pointer ring-2 ring-border transition-transform hover:scale-105'
+							/>
+						</Link>
+					)}
+
+					{/* ── MOBILE: Hamburger Dropdown ── */}
+					<div className='md:hidden'>
+						<Dropdown>
+							<Dropdown.Trigger>
+								<Button
+									isIconOnly
+									size='sm'
+									variant='flat'
+									aria-label='Open navigation menu'
+									className='border border-border bg-secondary text-foreground'
+								>
+									<Menu />
+								</Button>
+							</Dropdown.Trigger>
+
+							<Dropdown.Popover
+								// placement='bottom-end'
+								className='w-full mt-5'
+							>
+								<Dropdown.Menu aria-label='Navigation menu'>
+									{/* Nav Links */}
+									{navLinks.map((link) => (
+										<Dropdown.Item key={link.href} textValue={link.label}>
+											<Link
+												href={link.href}
+												className='block w-full font-medium text-foreground'
+											>
+												{link.label}
+											</Link>
+										</Dropdown.Item>
+									))}
+
+									{/* My Profile — only when logged in */}
+									{user
+										? [
+												<Dropdown.Item key='profile' textValue='My Profile'>
+													<Link
+														href='/profile'
+														className='block w-full font-medium text-foreground'
+													>
+														My Profile
+													</Link>
+												</Dropdown.Item>,
+
+												<Dropdown.Item
+													key='logout'
+													textValue='Logout'
+													className='text-danger'
+													onAction={handleLogout}
+												>
+													Logout
+												</Dropdown.Item>,
+											]
+										: [
+												<Dropdown.Item key='login' textValue='Login'>
+													<Link
+														href='/login'
+														className='block w-full font-medium text-foreground'
+													>
+														Login
+													</Link>
+												</Dropdown.Item>,
+
+												<Dropdown.Item
+													key='register'
+													textValue='Register'
+													className='font-medium text-primary'
+												>
+													<Link
+														href='/register'
+														className='block w-full font-medium text-primary'
+													>
+														Register
+													</Link>
+												</Dropdown.Item>,
+											]}
+								</Dropdown.Menu>
+							</Dropdown.Popover>
+						</Dropdown>
+					</div>
 				</div>
 			</header>
 		</nav>
