@@ -67,7 +67,7 @@ const QuantitySelector = ({
 						selectedKey={occasion || null}
 						onSelectionChange={(key) => setOccasion(key || '')}
 					>
-						<Select.Trigger className='flex w-full items-center justify-between rounded-2xl border border-border bg-muted p-1 px-4 h-[52px] text-foreground data-[placeholder]:text-muted-foreground shadow-none'>
+						<Select.Trigger className='flex w-full items-center justify-between rounded-2xl border border-border bg-muted p-1 px-4 h-13 text-foreground data-placeholder:text-muted-foreground shadow-none'>
 							<Select.Value className='text-foreground' />
 							<Select.Indicator className='text-muted-foreground' />
 						</Select.Trigger>
