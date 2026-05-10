@@ -1,4 +1,14 @@
-import { Label, ListBox, Select } from '@heroui/react'
+'use client'
+
+import { ListBox, Select } from '@heroui/react'
+
+const occasions = [
+	'Just Treat Yourself',
+	'Birthday Celebration',
+	'Anniversary',
+	"Valentine's Day",
+	'Gift for Someone',
+]
 
 const QuantitySelector = ({
 	qty,
@@ -8,37 +18,20 @@ const QuantitySelector = ({
 	instructions,
 	setInstructions,
 }) => {
-	const occasions = [
-		'Just Treat Yourself',
-		'Birthday Celebration',
-		'Anniversary',
-		"Valentine's Day",
-		'Gift for Someone',
-	]
-
 	return (
-		<div className='space-y-6 bg-card p-8 rounded-[2.5rem] border border-border shadow-xl transition-colors duration-300'>
-			{/* Quantity + Occasion */}
-			<div className='grid md:grid-cols-2 gap-6'>
-				{/* Quantity */}
+		<div className='space-y-6 rounded-3xl border border-border bg-card p-8 shadow-sm transition-colors'>
+			<div className='grid gap-6 md:grid-cols-2'>
+				{/* QUANTITY */}
 				<div>
-					<label className='block text-sm font-bold text-foreground mb-3'>
+					<label className='mb-3 block text-sm font-semibold text-foreground'>
 						Quantity
 					</label>
 
-					<div className='flex items-center bg-secondary rounded-2xl p-1.5 w-fit border border-border transition-colors duration-300'>
+					<div className='flex w-fit items-center rounded-2xl border border-border bg-muted p-1'>
 						<button
 							type='button'
 							onClick={() => setQty((q) => (q > 1 ? q - 1 : 1))}
-							className='
-								w-10 h-10
-								flex items-center justify-center
-								text-primary
-								hover:bg-background
-								rounded-xl
-								transition-all
-								font-bold text-xl
-							'
+							className='flex h-10 w-10 items-center justify-center text-xl font-bold text-foreground transition-colors hover:text-primary'
 						>
 							−
 						</button>
@@ -49,98 +42,41 @@ const QuantitySelector = ({
 							onChange={(e) =>
 								setQty(Math.max(1, parseInt(e.target.value) || 1))
 							}
-							className='
-								w-12 text-center
-								bg-transparent
-								text-foreground
-								font-bold text-lg
-								outline-none
-								appearance-none
-							'
+							className='w-full bg-transparent text-center text-foreground outline-none'
 						/>
 
 						<button
 							type='button'
 							onClick={() => setQty((q) => q + 1)}
-							className='
-								w-10 h-10
-								flex items-center justify-center
-								text-primary
-								hover:bg-background
-								rounded-xl
-								transition-all
-								font-bold text-xl
-							'
+							className='flex h-10 w-10 items-center justify-center text-xl font-bold text-foreground transition-colors hover:text-primary'
 						>
 							+
 						</button>
 					</div>
 				</div>
 
-				{/* Occasion */}
+				{/* OCCASION */}
 				<div>
-					<Select
-						selectedKeys={occasion ? [occasion] : []}
-						onSelectionChange={(keys) => {
-							const value = Array.from(keys)[0]
-							setOccasion(value || '')
-						}}
-						className='w-full'
-						placeholder='Select an occasion'
-					>
-						<Label className='text-sm font-bold text-foreground mb-2'>
-							Select Occasion
-						</Label>
+					<label className='mb-3 block text-sm font-semibold text-foreground'>
+						Occasion
+					</label>
 
-						<Select.Trigger
-							className='
-								bg-secondary
-								border border-border
-								text-foreground
-								rounded-2xl
-								px-4 py-3
-								min-h-14
-								shadow-none
-								transition-all
-								duration-300
-								data-[hovered=true]:bg-hover
-								data-[focus-visible=true]:ring-2
-								data-[focus-visible=true]:ring-primary/30
-							'
-						>
-							<Select.Value />
-							<Select.Indicator />
+					<Select
+						className='w-full'
+						placeholder='Choose occasion'
+						selectedKey={occasion || null}
+						onSelectionChange={(key) => setOccasion(key || '')}
+					>
+						<Select.Trigger className='flex w-full items-center justify-between rounded-2xl border border-border bg-muted p-1 px-4 h-[52px] text-foreground data-[placeholder]:text-muted-foreground shadow-none'>
+							<Select.Value className='text-foreground' />
+							<Select.Indicator className='text-muted-foreground' />
 						</Select.Trigger>
 
-						<Select.Popover
-							className='
-								bg-card
-								border border-border
-								rounded-2xl
-								shadow-2xl
-								p-2
-							'
-						>
-							<ListBox className='space-y-1'>
+						<Select.Popover>
+							<ListBox className='p-2'>
 								{occasions.map((occ) => (
-									<ListBox.Item
-										key={occ}
-										id={occ}
-										textValue={occ}
-										className='
-											rounded-xl
-											px-3 py-3
-											text-card-foreground
-											cursor-pointer
-											transition-all
-											duration-200
-											data-[hovered=true]:bg-hover
-											data-[selected=true]:bg-primary
-											data-[selected=true]:text-primary-foreground
-										'
-									>
+									<ListBox.Item key={occ} id={occ} textValue={occ}>
 										{occ}
-										<ListBox.ItemIndicator />
 									</ListBox.Item>
 								))}
 							</ListBox>
@@ -149,32 +85,18 @@ const QuantitySelector = ({
 				</div>
 			</div>
 
-			{/* Special Instructions */}
+			{/* INSTRUCTIONS */}
 			<div>
-				<label className='block text-sm font-bold text-foreground mb-3'>
+				<label className='mb-3 block text-sm font-semibold text-foreground'>
 					Special Baker Instructions
 				</label>
 
 				<textarea
+					placeholder='your message for baker...'
 					value={instructions}
 					onChange={(e) => setInstructions(e.target.value)}
-					rows='3'
-					placeholder='e.g. Less sugar, extra rose petals on top...'
-					className='
-						w-full
-						bg-secondary
-						border border-border
-						text-foreground
-						placeholder:text-muted-foreground
-						rounded-2xl
-						px-4 py-4
-						outline-none
-						resize-none
-						transition-all
-						duration-300
-						focus:ring-2
-						focus:ring-primary/20
-					'
+					rows={3}
+					className='w-full rounded-2xl border border-border bg-transparent p-4 text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary transition-shadow'
 				/>
 			</div>
 		</div>
