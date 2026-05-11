@@ -1,10 +1,5 @@
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
-import 'react-toastify/dist/ReactToastify.css'
-import NextThemeProvider from '../../providers/NextThemeProvider'
-import Navbar from '@/components/layout/Navbar'
-import Footer from '@/components/layout/Footer'
-import { ToastContainer } from 'react-toastify'
 
 // Body & UI font
 const inter = Inter({
@@ -32,21 +27,7 @@ export default function RootLayout({ children }) {
 			className={`${inter.variable} ${playfair.variable} h-screen antialiased`}
 		>
 			<body className='min-h-full flex flex-col font-(--font-inter)'>
-				<NextThemeProvider>
-					<ToastContainer
-						position='top-right'
-						autoClose={4000}
-						hideProgressBar={false}
-						newestOnTop={true}
-						closeOnClick
-						pauseOnHover
-						draggable
-						theme='light'
-					/>
-					<Navbar />
-					<main className='min-h-screen'>{children}</main>
-					<Footer />
-				</NextThemeProvider>
+				<main className='min-h-screen'>{children}</main>
 			</body>
 		</html>
 	)
